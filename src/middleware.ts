@@ -1,3 +1,7 @@
+import { NextResponse, type NextRequest } from 'next/server';
+
+// Auth middleware commented out for pure landing page mode
+/*
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 
 const isPublicRoute = createRouteMatcher([
@@ -19,17 +23,18 @@ export default clerkMiddleware(async (auth, req) => {
     Boolean(pubKey?.startsWith('pk_')) &&
     !pubKey?.includes('your_clerk_publishable_key');
 
-  // If Clerk keys are configured, enforce authentication on private routes
   if (hasClerkKeys && !isPublicRoute(req)) {
     await auth.protect();
   }
 });
+*/
+
+export default function middleware(req: NextRequest) {
+  return NextResponse.next();
+}
 
 export const config = {
   matcher: [
-    // Skip Next.js internals and static files
     '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
-    '/(api|trpc)(.*)',
-    '/__clerk/:path*',
   ],
 };

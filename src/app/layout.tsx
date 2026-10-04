@@ -1,4 +1,4 @@
-import { ClerkProvider } from '@clerk/nextjs';
+// import { ClerkProvider } from '@clerk/nextjs';
 import type { Metadata, Viewport } from 'next';
 import { Bricolage_Grotesque } from 'next/font/google';
 import './globals.css';
@@ -29,9 +29,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={bricolage.variable} suppressHydrationWarning>
       <body className={`min-h-screen ${bricolage.className}`}>
-        <ClerkProvider>
+        {/* Auth Provider Commented Out */}
+        {/* <ClerkProvider> */}
           {children}
-        </ClerkProvider>
+        {/* </ClerkProvider> */}
       </body>
     </html>
   );

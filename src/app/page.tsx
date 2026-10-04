@@ -1,8 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
-import { SignInButton, Show, UserButton, useUser } from '@clerk/nextjs';
 import Link from 'next/link';
+
+// Auth imports commented out:
+// import { SignInButton, Show, UserButton, useUser } from '@clerk/nextjs';
 
 interface QueueItem {
   id: number;
@@ -37,7 +39,9 @@ const INITIAL_QUEUE: QueueItem[] = [
 ];
 
 export default function HomePage() {
-  const { user } = useUser();
+  // Auth state commented out:
+  // const { user } = useUser();
+
   const [queue, setQueue] = useState<QueueItem[]>(INITIAL_QUEUE);
   const [email, setEmail] = useState('');
   const [emailStatus, setEmailStatus] = useState<{ type: 'idle' | 'error' | 'success'; message: string }>({
@@ -90,56 +94,12 @@ export default function HomePage() {
           <Link href="#faq" className="hidden sm:inline-block ml-[22px] no-underline text-[var(--muted)] hover:text-[var(--ink)] text-[15px] transition-colors">
             FAQ
           </Link>
-
-          {/* Auth / Workspace Navigation */}
-          <div className="ml-4 sm:ml-[22px] flex items-center gap-3">
-            <Show when="signed-in">
-              <Link
-                href="/home"
-                className="hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--accent)] hover:underline"
-              >
-                <span>Workspace</span>
-              </Link>
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-mono text-[var(--muted)] hidden md:inline">
-                  {user?.firstName || user?.username || 'Founder'}
-                </span>
-                <UserButton
-                  appearance={{
-                    elements: {
-                      avatarBox: 'w-8 h-8 rounded-full border border-[var(--line)]',
-                    },
-                  }}
-                />
-              </div>
-            </Show>
-            <Show when="signed-out">
-              <SignInButton mode="modal">
-                <button
-                  type="button"
-                  className="hidden md:inline-block text-[15px] text-[var(--muted)] hover:text-[var(--ink)] transition-colors cursor-pointer bg-transparent border-0 p-0"
-                >
-                  Sign in
-                </button>
-              </SignInButton>
-            </Show>
-            <Show when="signed-in">
-              <Link
-                href="/home"
-                className="btn-primary text-sm font-semibold !py-2.5 !px-4.5 rounded-[10px]"
-              >
-                Go to Workspace
-              </Link>
-            </Show>
-            <Show when="signed-out">
-              <Link
-                href="#join"
-                className="btn-primary text-sm font-semibold !py-2.5 !px-4.5 rounded-[10px]"
-              >
-                Join the waitlist
-              </Link>
-            </Show>
-          </div>
+          <Link
+            href="#join"
+            className="btn-primary text-sm font-semibold !py-2.5 !px-4.5 rounded-[10px] ml-[22px]"
+          >
+            Join the waitlist
+          </Link>
         </nav>
       </header>
 
@@ -155,24 +115,9 @@ export default function HomePage() {
               Tenfold watches your releases, then writes the launch post, makes the image, and queues it for you. You approve in one tap. It gets closer to your voice every week.
             </p>
             <div className="flex flex-wrap items-center gap-3">
-              <Show when="signed-in">
-                <Link href="/home" className="btn-primary text-[17px] font-semibold">
-                  Open Workspace &rarr;
-                </Link>
-              </Show>
-              <Show when="signed-out">
-                <Link href="#join" className="btn-primary text-[17px] font-semibold">
-                  Join the waitlist
-                </Link>
-                <SignInButton mode="modal">
-                  <button
-                    type="button"
-                    className="inline-block px-5 py-3 rounded-[10px] border border-[var(--line)] text-[var(--ink)] hover:bg-[var(--surface)] text-[15px] font-medium transition-colors cursor-pointer"
-                  >
-                    Founder Sign In
-                  </button>
-                </SignInButton>
-              </Show>
+              <Link href="#join" className="btn-primary text-[17px] font-semibold">
+                Join the waitlist
+              </Link>
             </div>
             <p className="text-sm text-[var(--muted)] mt-3.5">
               Built for developers who run their own products. Nothing posts without your approval.
